@@ -86,7 +86,7 @@
                                     <div class="card-body">
                                         <div class="content init">
                                             <div class="read_more" style="cursor:pointer">
-                                                阅读更多3333 <i class="el-icon-arrow-down"></i>
+                                                阅读更多88888 <i class="el-icon-arrow-down"></i>
                                             </div>
                                             <div style="clear:both;"></div>
                                             <div>
