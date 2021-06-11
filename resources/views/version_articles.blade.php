@@ -67,6 +67,16 @@
 @section('content')
     <div class="row mb-l">
         <div class="container home">
+            <div class="row">
+                <!-- <div class="btn-group sort_article_buttons" role="group" aria-label="Basic mixed styles example">
+                    <button type="button" class="btn btn-primary btn-sm createdate_btn">日期</button>
+                    <button type="button" class="btn btn-secondary btn-sm hot_btn">热门</button>
+                </div> -->
+                <sortbtn-component
+                   :spa_page="false"
+                >
+                </sortbtn-component>
+            </div>
             <div class="row xs-flex-reverse">
                 <div class="article_left_section col-md-8 btn-primarycol-sm-6 col-xs-12">
                     <div id="accordion">

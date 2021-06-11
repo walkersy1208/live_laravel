@@ -26,18 +26,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test', 'homeController@index');
-
 Route::get('/params_get', 'homeController@params');
-/*  http://localhost:6060/params_get?id=1&name=xxx
-
-设置默认值，$id可以不存在
-传递的URL 如下：http://localhost:6060/params/10/xxx
-Route::get('/params/{id?}/{name}', 'homeController@params_method')
-    ->where('id', '[0-9]+')
-    ->middleware("\App\Http\Middleware\benchMark::class");
-Route::get('/params/{id?}/{name}', 'homeController@params_method')
-    ->where('id', '[0-9]+');*/
-
 Route::get('testmiddileware', 'homeController@testMiddile');
 Route::get('/collection_test', 'homeController@collect');
 Route::get('/register/{name}/{password}', 'registerController@index');
@@ -50,22 +39,22 @@ Route::get('/login', 'loginController@index');
 Route::get('/logout', 'loginController@logout');
 Route::get('/collect', 'loginController@test_collection');
 Route::post('/check', 'loginController@check');
+
+//Article Route
 Route::get('/articles', 'ArticlesController@index');
 Route::get('/tag_articles/{tag}', 'ArticlesController@tag_articles');
 //Route::get('/articles_v2', 'ArticlesController@index');
 Route::post('/checkUserLike', 'ArticlesController@checkUserLike');
-
 Route::post('/articles_add', 'ArticlesController@articles_add');
 Route::post('/articles_del/{article}', 'ArticlesController@destroy')->name('article.del');
 Route::post('/articles_like', 'ArticlesController@handlelike');
 Route::get('/articles_edit/{article}', 'ArticlesController@edit')->name('article.edit');
 Route::post('/articles_update/{article}', 'ArticlesController@update')->name('article.update');
 Route::post('/carousel_items', 'ArticlesController@carousel_items');
-
 Route::get('/articles_add', 'ArticlesController@create')->name('article.create');
 Route::post('/articles_save', 'ArticlesController@store')->name('article.store');
-
 Route::post('/article_tags', 'ArticlesController@article_tags')->name('article.tags');
+Route::get('/article_sort/{param}', 'ArticlesController@article_sort')->name('article_sort');
 //Route::post('/tags_search', 'ArticlesController@tags')->name('article.tags');
 
 //admin

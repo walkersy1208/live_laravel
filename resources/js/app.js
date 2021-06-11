@@ -62,6 +62,8 @@ Vue.component('article-component', require('./components/AddArticleComponent.vue
 Vue.component('editor-component', require('./components/editorComponent.vue').default);
 Vue.component('search-component', require('./components/searchComponent.vue').default);
 Vue.component('notificationlist-component', require('./components/NotificationListComponent').default);
+Vue.component('sortbtn-component', require('./components/sortBtnComponent.vue').default);
+
 
 
 Vue.component('spaheader-component', require('./components/spa/common/HeaderComponent.vue').default);

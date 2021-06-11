@@ -47,6 +47,22 @@ class ArticlesController extends Controller
         }
     }
 
+    public function article_sort(Request $request, $condition)
+    {
+        if (!empty($condition) && in_array($condition, ['date', 'hot'])) {
+            $orderby = $condition == 'date' ? 'display_priority' : 'count_likes';
+            $articles = Articles::with('user')->orderBy($orderby, 'desc')->paginate(5);
+            $tags = Tags::withCount('article')->get();
+
+            return view('version_articles', [
+                'articles' => $articles,
+                'tags' => $tags,
+            ]);
+        } else {
+            return back();
+        }
+    }
+
     public function index(Request $request)
     {
         $articles = Articles::with('user')->orderBy('display_priority', 'desc')->paginate(5);

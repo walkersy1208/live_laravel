@@ -136,6 +136,14 @@
             font-size:10px;
         }
 
+        .sort_article_buttons{
+            margin-bottom:10px;
+        }
+
+        .sort_article_buttons .createdate_btn{
+            margin-right:10px;
+        }
+
         @media(min-width:1024px) {
             .left_menu {
                 float: left;
@@ -148,8 +156,6 @@
                 padding-left: 10px;
                 padding-right: 10px;
             }
-
-
         }
 
         @media(max-width:767px) {
@@ -179,6 +185,10 @@
             .xs-flex-reverse{
                 display: flex; 
                 flex-direction: column-reverse;
+            }
+
+            .article_right_section{
+                margin-bottom:30px;
             }
         }
 
