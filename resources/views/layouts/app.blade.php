@@ -7,7 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+   
     <title>{{ config('app.name', '中港数码') }}</title>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -22,60 +22,7 @@
     
 
     header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-
-    // $client = new GuzzleHttp\Client();
-    // $client ->request('get', '/api/login', [
-    //     'headers' => [
-    //         'Authorization' => 'Bearer 111111',
-    //         'Accept' => 'application/json',
-    //     ],
-    // ]);
-    // header("Access-Control-Allow-Origin: *");
-    // header("Access-Control-Allow-Methods: *");
-    // header("Access-Control-Allow-Headers: Origin, Methods, Content-Type");
-
-    // request()->headers->set('test', '3344');
-    // request()->header('teamleader_access_token', "1111");
-    // request()->headers->set('test', '3344');
    
-
-    // request()->headers->set('Authorization', '11111');
-
-    // header('WWW-Authenticate: Basic realm=”Top Secret”'); 
-
-    // $client = new GuzzleHttp\Client();
-    // $response = $client->request('POST', '/api/user', [
-    // 'headers' => [
-    //     'Authorization' => 'Bearer '.$token,
-    //         'Accept' => 'application/json',
-    //     ],
-    // ]);
-    // $client->send($request);
-    //$headers = apache_request_headers();
-    //dd(request()->headers);
-    // $client = new GuzzleHttp\Client();
-    // $request = $client->createRequest('GET', 'http://localhost:6060');
-    
-    // $request->addHeader('X-Authorization', 'OAuth realm=1111');
-    // $resp = $client->send($request);
-
-    //dd(request()->accessing_from);
-
-       
-    //return json_decode($result); // Return the received data
-
-    // if(Cache::get('jwt_cache_token')){ 
-    // request()->headers->set('Authorization', Cache::get('jwt_cache_token'));
-    // //dd(request()->header('Authorization'));
-
-    // }
-    //dd(request()->header('Authorization'));
-
-
-   //header('Accept: application/json');
-    //dd(request());
-
-    
     ?>
     <style>
         .row {
