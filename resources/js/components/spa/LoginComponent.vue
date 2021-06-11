@@ -6,7 +6,7 @@
             :message="msg"
         ></message-component>
 
-        <div class="login_form_warapper">
+        <div class="login_form_warapper" >
            
                 <div class="form-group">
                     <input
@@ -18,7 +18,7 @@
                         v-model="username"
                     />
                     <small id="emailHelp" class="form-text text-muted"
-                        >We'll never share your email with anyone else.</small
+                        ></small
                     >
                 </div>
                 <div class="form-group">
@@ -30,14 +30,14 @@
                         placeholder="Password"
                     />
                 </div>
-                <button  @click="handleComfirm" class="btn btn-primary">Submit</button>
+                <button  @click="handleComfirm" class="btn btn-primary">确定</button>
            
         </div>
     </div>
 </template>
 <style>
    .login_form_warapper {
-        width:40%;
+        width:80%;
         position: absolute;
         left: 50%;
         top: 50%;
@@ -45,6 +45,14 @@
         background: #3333330a;
         padding: 30px;
         transform: translate(-50%, -50%);
+        background-image: url('/images/1120.png');
+        max-width:760px;
+    }
+
+    @media(max-width:767px){
+        .login_form_warapper {
+            max-width:80%;
+        }
     }
 </style>
 <script>
