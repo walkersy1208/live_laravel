@@ -69,6 +69,7 @@ Vue.component('sortbtn-component', require('./components/sortBtnComponent.vue').
 Vue.component('spaheader-component', require('./components/spa/common/HeaderComponent.vue').default);
 Vue.component('spalike-component', require('./components/spa/SpalikeComponent.vue').default);
 Vue.component('spalogin-component', require('./components/spa/LoginComponent.vue').default);
+//Vue.component('articledetail-component', require('./components/spa/pages/articleDetailComponent.vue').default);
 Vue.component('spanotification-component', require('./components/spa/NotificationsComponent.vue').default);
 
 //spa

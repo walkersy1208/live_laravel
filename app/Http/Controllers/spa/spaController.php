@@ -26,7 +26,27 @@ class spaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['index', 'login', 'spa_articles', 'get_articles', 'tag_articles', 'article_sort']]);
+        $this->middleware('auth:api', ['except' => ['index', 'login', 'spa_articles', 'get_articles', 'tag_articles', 'article_sort', 'article_detail']]);
+    }
+
+    public function article_detail(Request $request)
+    {
+        if (!empty($request->input('article_id'))) {
+            $articles = Articles::with('user')->with('tags')->where('id', $request->input('article_id'))->first();
+            //$tags = Tags::withCount('article')->get();
+
+            if (!empty($articles)) {
+                return response()->json([
+                    'articles' => $articles,
+
+                    'code' => '0',
+                ]);
+            } else {
+                return response()->json([
+                    'code' => '-1',
+                ]);
+            }
+        }
     }
 
     public function article_sort(Request $request)
@@ -350,6 +370,8 @@ class spaController extends Controller
             'username' => $request->input('username'),
             'password' => $request->input('password'),
         ]);
+
+        //dd($request->input('username'));
 
         $code = -1;
         $data = [];

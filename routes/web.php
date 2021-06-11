@@ -150,6 +150,7 @@ Route::group(['prefix' => 'spa',  'namespace' => 'spa'], function () {
     Route::post('/articles_like', 'spaController@handlelike');
     Route::post('/articles_add', 'spaController@articles_add');
     Route::post('/article_sort', 'spaController@article_sort');
+    Route::post('/article_detail', 'spaController@article_detail');
 
     Route::post('/read_all_notifications', 'spaController@read_all_notifications');
     Route::post('/read_notifications', 'spaController@read_notifications');

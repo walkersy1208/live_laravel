@@ -28,7 +28,7 @@
                                             class="btn btn-link"
                                             data-toggle="collapse"
                                             aria-expanded="true"
-                                            
+                                            @click="article_detail(item.id)"
                                         >
                                         {{item.title}}
                                         </button>
@@ -403,6 +403,15 @@
                         })
                     }
             }
+        },
+
+        article_detail(id){
+            this.$router.push({
+                name:'detail',
+                params:{
+                    id:id
+                }
+            })
         },
 
         async initData(){

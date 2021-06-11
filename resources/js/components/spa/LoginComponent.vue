@@ -31,7 +31,6 @@
                     />
                 </div>
                 <button  @click="handleComfirm" class="btn btn-primary">确定</button>
-           
         </div>
     </div>
 </template>
@@ -86,6 +85,7 @@ export default {
 
                 axios.post(url, submit_data, config).then(res => {
                     let { status, data } = res;
+                   
                     var all_el = document.querySelectorAll(
                         ".role_error_field_msg"
                     );

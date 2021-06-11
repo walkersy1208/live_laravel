@@ -18,7 +18,12 @@ export default new VueRouter({
             path: '/spa/index',
             name:'home',
             component: ()=>import('../../components/spa/pages/homeComponent.vue')
+        },
 
+        {   
+            path: '/spa/article_detail/:id',
+            name:'detail',
+            component: ()=>import('../../components/spa/pages/articleDetailComponent.vue')
         },
 
         {   
