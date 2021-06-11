@@ -271,7 +271,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -684,36 +683,27 @@ var render = function() {
                               staticStyle: { "margin-bottom": "30px" }
                             },
                             [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "card-header",
-                                  attrs: { id: "headingOne" }
-                                },
-                                [
-                                  _c("h5", { staticClass: "mb-0" }, [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-link",
-                                        attrs: {
-                                          "data-toggle": "collapse",
-                                          "aria-expanded": "true",
-                                          "data-target": "#collapseOne",
-                                          "aria-controls": "collapseOne"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                        " +
-                                            _vm._s(item.title) +
-                                            "\n                                    "
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ]
-                              ),
+                              _c("div", { staticClass: "card-header" }, [
+                                _c("h5", { staticClass: "mb-0" }, [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-link",
+                                      attrs: {
+                                        "data-toggle": "collapse",
+                                        "aria-expanded": "true"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(item.title) +
+                                          "\n                                    "
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ]),
                               _vm._v(" "),
                               _c(
                                 "div",
@@ -958,9 +948,7 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "card" }, [
-                _c("div", { staticClass: "card-header" }, [
-                  _vm._v("相关标签3")
-                ]),
+                _c("div", { staticClass: "card-header" }, [_vm._v("相关标签")]),
                 _vm._v(" "),
                 _c(
                   "div",

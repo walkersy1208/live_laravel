@@ -22,16 +22,15 @@
                     <div id="accordion">
                         <transition-group name="fade" v-if="articles">
                             <div class="card"  v-for="(item, index) in articles" :key="index+1" style="margin-bottom:30px;">
-                                <div class="card-header" id="headingOne">
+                                <div class="card-header" >
                                     <h5 class="mb-0">
                                         <button
                                             class="btn btn-link"
                                             data-toggle="collapse"
                                             aria-expanded="true"
-                                            data-target="#collapseOne"
-                                            aria-controls="collapseOne"
+                                            
                                         >
-                                            {{item.title}}
+                                        {{item.title}}
                                         </button>
                                     </h5>
                                 </div>
@@ -110,7 +109,7 @@
                 </div>
                  <div class="article_right_section col-md-4 btn-primarycol-sm-6 col-xs-12 " >
                     <div class="card">
-                        <div class="card-header">相关标签3</div>
+                        <div class="card-header">相关标签</div>
                         <div class="card-body">
                             <a  
                                 style="cursor:pointer;" 

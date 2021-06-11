@@ -190,6 +190,10 @@
             .article_right_section{
                 margin-bottom:30px;
             }
+
+            /*.article_left_section .btn{
+                text-align: left !important;
+            }*/
         }
 
         .el-table--enable-row-hover .el-table__body tr:hover>td {

@@ -82,9 +82,9 @@
                     <div id="accordion">
                         @foreach ($articles as $article)
                             <div class="card" style="margin-bottom:20px;">
-                                <div class="card-header" id="headingOne">
+                                <div class="card-header">
                                     <h5 class="mb-0">
-                                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                                        <button class="btn btn-link"
                                             aria-expanded="true" aria-controls="collapseOne">
                                             {{ $article->title }}
                                         </button>
