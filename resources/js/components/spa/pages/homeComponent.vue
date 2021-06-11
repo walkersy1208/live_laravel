@@ -294,7 +294,7 @@
    
     methods:{
         sort(condition){
-            let url = "/spa/get_articles/";
+            let url = "/spa/get_articles";
             this.sort_article(url,condition);
         },
 

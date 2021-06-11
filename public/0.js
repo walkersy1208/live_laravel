@@ -315,7 +315,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   // },
   methods: {
     sort: function sort(condition) {
-      var url = "/spa/get_articles/";
+      var url = "/spa/get_articles";
       this.sort_article(url, condition);
     },
     sort_article: function sort_article(url, condition) {
