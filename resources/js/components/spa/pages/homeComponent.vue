@@ -9,11 +9,18 @@
             <swiper-component></swiper-component>
         </div>
         <div class="container">
+        <div class="row">
+            <sortbtn-component
+                :spa_page="true"
+                @sort_article="sort"
+            >
+            </sortbtn-component>
+        </div>
         <div class="row xs-flex-reverse" :key="time">
                 <div  class="article_left_section col-md-8 btn-primarycol-sm-6 col-xs-12"
                 >
                     <div id="accordion">
-                        <transition-group name="fade">
+                        <transition-group name="fade" v-if="articles">
                             <div class="card"  v-for="(item, index) in articles" :key="index+1" style="margin-bottom:30px;">
                                 <div class="card-header" id="headingOne">
                                     <h5 class="mb-0">
@@ -271,6 +278,7 @@
             time: '',
             showReadMore:true,
             open_up:false,
+            sortBy:"display_priority",
         };
     },
 
@@ -285,6 +293,26 @@
     // },
    
     methods:{
+        sort(condition){
+            let url = "/spa/get_articles/";
+            this.sort_article(url,condition);
+        },
+
+        async sort_article(url,condition){
+            this.sortBy = condition;
+            let submit_data = {
+                "sortBy": condition,
+            }
+            let config = {};
+            
+            let res = await axios.post(url, submit_data,config);
+            let {status,data} = res;
+            if(status == "200" && data.code!="-1"){
+                this.articles = [];
+                this.setPageData(data);
+            }
+        },
+
         readMore(e,index){ 
             if(e.target.parentNode.parentNode.className.indexOf("init")!=-1){
                 e.target.parentNode.parentNode.className="content";
@@ -348,13 +376,16 @@
             this.cur_page = page;
            
             let submit_data = {
-               "page":this.cur_page
+               "page":this.cur_page,
+               "sortBy":this.sortBy,
             }
+
             let config = {};
             let url = "";
 
             if(this.page_type == "tag"){ 
                 submit_data.tag_id = this.tag_id;
+               
                 url = '/spa/tag_articles';
             }else{  
                 url = '/spa/get_articles';
@@ -392,7 +423,7 @@
                 
                 this.tag_active = true;
                 let submit_data = {
-                    
+                    "sortBy":this.sortBy,
                 };
 
                 if(tag_id){

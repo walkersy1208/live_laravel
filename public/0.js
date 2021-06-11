@@ -265,6 +265,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -294,7 +301,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       tag_default_choose: true,
       time: '',
       showReadMore: true,
-      open_up: false
+      open_up: false,
+      sortBy: "display_priority"
     };
   },
   // watch: {
@@ -306,6 +314,45 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   //     }
   // },
   methods: {
+    sort: function sort(condition) {
+      var url = "/spa/get_articles/";
+      this.sort_article(url, condition);
+    },
+    sort_article: function sort_article(url, condition) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var submit_data, config, res, status, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this2.sortBy = condition;
+                submit_data = {
+                  "sortBy": condition
+                };
+                config = {};
+                _context.next = 5;
+                return axios.post(url, submit_data, config);
+
+              case 5:
+                res = _context.sent;
+                status = res.status, data = res.data;
+
+                if (status == "200" && data.code != "-1") {
+                  _this2.articles = [];
+
+                  _this2.setPageData(data);
+                }
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
     readMore: function readMore(e, index) {
       if (e.target.parentNode.parentNode.className.indexOf("init") != -1) {
         e.target.parentNode.parentNode.className = "content";
@@ -356,44 +403,45 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
     },*/
     page_change: function page_change(page) {
-      var _this2 = this;
+      var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var submit_data, config, url, res, _this, status, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 //this.showHidden  = false
-                _this2.articles = [];
-                _this2.cur_page = page;
+                _this3.articles = [];
+                _this3.cur_page = page;
                 submit_data = {
-                  "page": _this2.cur_page
+                  "page": _this3.cur_page,
+                  "sortBy": _this3.sortBy
                 };
                 config = {};
                 url = "";
 
-                if (_this2.page_type == "tag") {
-                  submit_data.tag_id = _this2.tag_id;
+                if (_this3.page_type == "tag") {
+                  submit_data.tag_id = _this3.tag_id;
                   url = '/spa/tag_articles';
                 } else {
                   url = '/spa/get_articles';
                 }
 
-                _context.next = 8;
+                _context2.next = 8;
                 return axios.post(url, submit_data, config);
 
               case 8:
-                res = _context.sent;
-                _this = _this2;
+                res = _context2.sent;
+                _this = _this3;
                 status = res.status, data = res.data;
 
                 if (status == "200") {
-                  _this2.setPageData(data);
+                  _this3.setPageData(data);
 
                   if (_this.auth) {
-                    _this2.$nextTick(function () {
+                    _this3.$nextTick(function () {
                       for (var i in this.$refs.likeCom) {
                         this.$refs.likeCom[i].checkUserLike();
                       }
@@ -403,44 +451,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 12:
               case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    initData: function initData() {
-      var _this3 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var submit_data, config, url, res, status, data;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                submit_data = {};
-                config = {};
-                url = '/spa/get_articles';
-                _context2.next = 5;
-                return axios.post(url, submit_data, config);
-
-              case 5:
-                res = _context2.sent;
-                status = res.status, data = res.data; //console.log(data);
-
-                if (status == "200") {
-                  _this3.setPageData(data);
-                }
-
-              case 8:
-              case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
       }))();
     },
-    handleTag: function handleTag(tag_id, index) {
+    initData: function initData() {
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
@@ -449,35 +466,68 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _this4.tag_active = true;
                 submit_data = {};
+                config = {};
+                url = '/spa/get_articles';
+                _context3.next = 5;
+                return axios.post(url, submit_data, config);
+
+              case 5:
+                res = _context3.sent;
+                status = res.status, data = res.data; //console.log(data);
+
+                if (status == "200") {
+                  _this4.setPageData(data);
+                }
+
+              case 8:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    handleTag: function handleTag(tag_id, index) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var submit_data, config, url, res, status, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _this5.tag_active = true;
+                submit_data = {
+                  "sortBy": _this5.sortBy
+                };
 
                 if (tag_id) {
                   submit_data.tag_id = tag_id;
-                  _this4.tag_id = tag_id;
-                  _this4.page_type = "tag";
-                  _this4.tag_default_choose = false;
-                  _this4.curr_tag_index = index;
+                  _this5.tag_id = tag_id;
+                  _this5.page_type = "tag";
+                  _this5.tag_default_choose = false;
+                  _this5.curr_tag_index = index;
                 } else {
-                  _this4.page_type = "";
-                  _this4.tag_default_choose = true;
-                  _this4.curr_tag_index = "-1";
+                  _this5.page_type = "";
+                  _this5.tag_default_choose = true;
+                  _this5.curr_tag_index = "-1";
                 }
 
                 config = {};
                 url = '/spa/tag_articles';
-                _context3.next = 7;
+                _context4.next = 7;
                 return axios.post(url, submit_data, config);
 
               case 7:
-                res = _context3.sent;
+                res = _context4.sent;
                 status = res.status, data = res.data;
 
                 if (status == "200") {
-                  _this4.setPageData(data);
+                  _this5.setPageData(data);
 
-                  if (_this4.auth) {
-                    _this4.$nextTick(function () {
+                  if (_this5.auth) {
+                    _this5.$nextTick(function () {
                       for (var i in this.$refs.likeCom) {
                         this.$refs.likeCom[i].checkUserLike();
                         this.showHidden = true;
@@ -488,10 +538,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 10:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }))();
     }
   },
@@ -501,21 +551,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    var _this5 = this;
+    var _this6 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
-              _this5.initData();
+              _this6.initData();
 
             case 1:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
         }
-      }, _callee4);
+      }, _callee5);
     }))();
   }
 });
@@ -597,6 +647,18 @@ var render = function() {
       _c("div", { staticClass: "mb-m" }, [_c("swiper-component")], 1),
       _vm._v(" "),
       _c("div", { staticClass: "container" }, [
+        _c(
+          "div",
+          { staticClass: "row" },
+          [
+            _c("sortbtn-component", {
+              attrs: { spa_page: true },
+              on: { sort_article: _vm.sort }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
         _c("div", { key: _vm.time, staticClass: "row xs-flex-reverse" }, [
           _c(
             "div",
@@ -609,254 +671,279 @@ var render = function() {
                 "div",
                 { attrs: { id: "accordion" } },
                 [
-                  _c(
-                    "transition-group",
-                    { attrs: { name: "fade" } },
-                    _vm._l(_vm.articles, function(item, index) {
-                      return _c(
-                        "div",
-                        {
-                          key: index + 1,
-                          staticClass: "card",
-                          staticStyle: { "margin-bottom": "30px" }
-                        },
-                        [
-                          _c(
+                  _vm.articles
+                    ? _c(
+                        "transition-group",
+                        { attrs: { name: "fade" } },
+                        _vm._l(_vm.articles, function(item, index) {
+                          return _c(
                             "div",
                             {
-                              staticClass: "card-header",
-                              attrs: { id: "headingOne" }
+                              key: index + 1,
+                              staticClass: "card",
+                              staticStyle: { "margin-bottom": "30px" }
                             },
                             [
-                              _c("h5", { staticClass: "mb-0" }, [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-link",
-                                    attrs: {
-                                      "data-toggle": "collapse",
-                                      "aria-expanded": "true",
-                                      "data-target": "#collapseOne",
-                                      "aria-controls": "collapseOne"
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                        " +
-                                        _vm._s(item.title) +
-                                        "\n                                    "
-                                    )
-                                  ]
-                                )
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "collapse show",
-                              attrs: {
-                                id: "collapseOne",
-                                "aria-labelledby": "headingOne",
-                                "data-parent": "#accordion"
-                              }
-                            },
-                            [
-                              _c("div", { staticClass: "card-body" }, [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "content",
-                                    class: { init: _vm.showReadMore }
-                                  },
-                                  [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "card-header",
+                                  attrs: { id: "headingOne" }
+                                },
+                                [
+                                  _c("h5", { staticClass: "mb-0" }, [
                                     _c(
-                                      "div",
+                                      "button",
                                       {
-                                        staticClass: "read_more",
-                                        staticStyle: { cursor: "pointer" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.readMore($event, index)
-                                          }
+                                        staticClass: "btn btn-link",
+                                        attrs: {
+                                          "data-toggle": "collapse",
+                                          "aria-expanded": "true",
+                                          "data-target": "#collapseOne",
+                                          "aria-controls": "collapseOne"
                                         }
                                       },
                                       [
                                         _vm._v(
-                                          "\n                                            阅读更多"
-                                        ),
-                                        _c("i", {
-                                          staticClass: "el-icon-arrow-down"
-                                        })
+                                          "\n                                        " +
+                                            _vm._s(item.title) +
+                                            "\n                                    "
+                                        )
                                       ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("div", {
-                                      staticStyle: { clear: "both" }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("div", {
-                                      staticClass: "content",
-                                      domProps: {
-                                        innerHTML: _vm._s(item.content)
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("div", [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "open_up",
-                                          staticStyle: { cursor: "pointer" },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.openUp($event, index)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                收起 "
-                                          ),
-                                          _c("i", {
-                                            staticClass: "el-icon-arrow-up"
-                                          })
-                                        ]
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "list_bottom" }, [
-                                      _c(
-                                        "div",
-                                        [
-                                          _c("spalike-component", {
-                                            ref: "likeCom",
-                                            refInFor: true,
-                                            attrs: {
-                                              article_id: item.id,
-                                              is_login: _vm.auth,
-                                              likes_num: item.count_likes,
-                                              showLikeCom: _vm.showHidden
-                                            },
+                                    )
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "collapse show",
+                                  attrs: {
+                                    id: "collapseOne",
+                                    "aria-labelledby": "headingOne",
+                                    "data-parent": "#accordion"
+                                  }
+                                },
+                                [
+                                  _c("div", { staticClass: "card-body" }, [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "content",
+                                        class: { init: _vm.showReadMore }
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "read_more",
+                                            staticStyle: { cursor: "pointer" },
                                             on: {
-                                              "update:likes_num": function(
-                                                $event
-                                              ) {
-                                                return _vm.$set(
-                                                  item,
-                                                  "count_likes",
-                                                  $event
+                                              click: function($event) {
+                                                return _vm.readMore(
+                                                  $event,
+                                                  index
                                                 )
-                                              },
-                                              login: _vm.handleLikeLogin
+                                              }
                                             }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _vm.auth && item.user_id == _vm.auth_id
-                                        ? _c(
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                            阅读更多"
+                                            ),
+                                            _c("i", {
+                                              staticClass: "el-icon-arrow-down"
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("div", {
+                                          staticStyle: { clear: "both" }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("div", {
+                                          staticClass: "content",
+                                          domProps: {
+                                            innerHTML: _vm._s(item.content)
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("div", [
+                                          _c(
                                             "div",
+                                            {
+                                              staticClass: "open_up",
+                                              staticStyle: {
+                                                cursor: "pointer"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.openUp(
+                                                    $event,
+                                                    index
+                                                  )
+                                                }
+                                              }
+                                            },
                                             [
-                                              _c("article-component", {
-                                                attrs: {
-                                                  type: "edit",
-                                                  title: "提示信息",
-                                                  fields: [
-                                                    {
-                                                      name: "title",
-                                                      type: "text",
-                                                      ph: "请输入文章标题",
-                                                      val: "" + item.title
+                                              _vm._v(
+                                                "\n                                                收起 "
+                                              ),
+                                              _c("i", {
+                                                staticClass: "el-icon-arrow-up"
+                                              })
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "list_bottom" },
+                                          [
+                                            _c(
+                                              "div",
+                                              [
+                                                _c("spalike-component", {
+                                                  ref: "likeCom",
+                                                  refInFor: true,
+                                                  attrs: {
+                                                    article_id: item.id,
+                                                    is_login: _vm.auth,
+                                                    likes_num: item.count_likes,
+                                                    showLikeCom: _vm.showHidden
+                                                  },
+                                                  on: {
+                                                    "update:likes_num": function(
+                                                      $event
+                                                    ) {
+                                                      return _vm.$set(
+                                                        item,
+                                                        "count_likes",
+                                                        $event
+                                                      )
                                                     },
-                                                    {
-                                                      name: "tags",
-                                                      type: "search",
-                                                      ph: "",
-                                                      request_url: "/",
-                                                      val:
-                                                        "" +
-                                                        JSON.stringify(
-                                                          item.tags
-                                                        )
-                                                    },
-                                                    {
-                                                      name: "content",
-                                                      type: "editor",
-                                                      ph: "",
-                                                      val: "" + item.content
-                                                    }
+                                                    login: _vm.handleLikeLogin
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _vm.auth &&
+                                            item.user_id == _vm.auth_id
+                                              ? _c(
+                                                  "div",
+                                                  [
+                                                    _c("article-component", {
+                                                      attrs: {
+                                                        type: "edit",
+                                                        title: "提示信息",
+                                                        fields: [
+                                                          {
+                                                            name: "title",
+                                                            type: "text",
+                                                            ph:
+                                                              "请输入文章标题",
+                                                            val: "" + item.title
+                                                          },
+                                                          {
+                                                            name: "tags",
+                                                            type: "search",
+                                                            ph: "",
+                                                            request_url: "/",
+                                                            val:
+                                                              "" +
+                                                              JSON.stringify(
+                                                                item.tags
+                                                              )
+                                                          },
+                                                          {
+                                                            name: "content",
+                                                            type: "editor",
+                                                            ph: "",
+                                                            val:
+                                                              "" + item.content
+                                                          }
+                                                        ],
+                                                        msg: "更新成功",
+                                                        status: "success",
+                                                        request_url:
+                                                          "/spa/articles_update/" +
+                                                          item.id,
+                                                        redirect_url:
+                                                          "/spa/index"
+                                                      },
+                                                      on: {
+                                                        update_record:
+                                                          _vm.handle_update_record
+                                                      }
+                                                    })
                                                   ],
-                                                  msg: "更新成功",
-                                                  status: "success",
-                                                  request_url:
-                                                    "/spa/articles_update/" +
-                                                    item.id,
-                                                  redirect_url: "/spa/index"
-                                                },
-                                                on: {
-                                                  update_record:
-                                                    _vm.handle_update_record
-                                                }
-                                              })
-                                            ],
-                                            1
-                                          )
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      _vm.auth && item.user_id == _vm.auth_id
-                                        ? _c(
-                                            "div",
-                                            [
-                                              _c("comfirm-component", {
-                                                attrs: {
-                                                  request_url:
-                                                    "articles_del/" + item.id,
-                                                  small_size: true,
-                                                  del_id: item.id
-                                                }
-                                              })
-                                            ],
-                                            1
-                                          )
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "article_user_name" },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(item.user.name) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "article_created_date" },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(item.created_at) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    ])
-                                  ]
-                                )
-                              ])
+                                                  1
+                                                )
+                                              : _vm._e(),
+                                            _vm._v(" "),
+                                            _vm.auth &&
+                                            item.user_id == _vm.auth_id
+                                              ? _c(
+                                                  "div",
+                                                  [
+                                                    _c("comfirm-component", {
+                                                      attrs: {
+                                                        request_url:
+                                                          "articles_del/" +
+                                                          item.id,
+                                                        small_size: true,
+                                                        del_id: item.id
+                                                      }
+                                                    })
+                                                  ],
+                                                  1
+                                                )
+                                              : _vm._e(),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass: "article_user_name"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                    " +
+                                                    _vm._s(item.user.name) +
+                                                    "\n                                                "
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "article_created_date"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                    " +
+                                                    _vm._s(item.created_at) +
+                                                    "\n                                                "
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              )
                             ]
                           )
-                        ]
+                        }),
+                        0
                       )
-                    }),
-                    0
-                  )
+                    : _vm._e()
                 ],
                 1
               )

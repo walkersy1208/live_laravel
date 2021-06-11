@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
    
-    <title>{{ config('app.name', '中港数码') }}</title>
+    <title>{{ config('app.name','数码资讯1') }}</title>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     

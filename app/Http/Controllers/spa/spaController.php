@@ -26,7 +26,26 @@ class spaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['index', 'login', 'spa_articles', 'get_articles', 'tag_articles']]);
+        $this->middleware('auth:api', ['except' => ['index', 'login', 'spa_articles', 'get_articles', 'tag_articles', 'article_sort']]);
+    }
+
+    public function article_sort(Request $request)
+    {
+        $condition = $request->input('sortBy');
+        if (!empty($condition) && in_array($condition, ['date', 'hot'])) {
+            $orderby = $condition == 'date' ? 'display_priority' : 'count_likes';
+            $articles = Articles::with('user')->orderBy($orderby, 'desc')->paginate(5);
+            $tags = Tags::withCount('article')->get();
+
+            return response()->json([
+                'articles' => $articles,
+                'tags' => $tags,
+            ]);
+        } else {
+            return response()->json([
+               'code' => '-1',
+            ]);
+        }
     }
 
     public function destroy(Request $request, $article)
@@ -109,9 +128,15 @@ class spaController extends Controller
         }
     }
 
-    public function get_articles()
+    public function get_articles(Request $request)
     {
-        $articles = Articles::with('user')->with('tags')->orderBy('display_priority', 'desc')->paginate(5);
+        $condition = $request->input('sortBy');
+        $orderby = 'display_priority';
+        if (!empty($condition) && in_array($condition, ['date', 'hot'])) {
+            $orderby = $condition == 'date' ? 'display_priority' : 'count_likes';
+        }
+
+        $articles = Articles::with('user')->with('tags')->orderBy($orderby, 'desc')->paginate(5);
         $tags = Tags::withCount('article')->get();
         $create_date = $articles->toArray()['data'][0]['created_at'];
 
@@ -291,18 +316,18 @@ class spaController extends Controller
 
     public function tag_articles(Request $request)
     {
-       
         $tag_id = $request->input('tag_id');
 
         if (!empty($tag_id)) {
-            // $tags_model = Tags::find($tag_id)->article();
-            // $articles = $tags_model->paginate(2);
-            // $tags = Tags::withCount('article')->get();
-            // dd($related_articles);
+            $condition = $request->input('sortBy');
+            $orderby = 'display_priority';
+            if (!empty($condition) && in_array($condition, ['date', 'hot'])) {
+                $orderby = $condition == 'date' ? 'display_priority' : 'count_likes';
+            }
 
             $rst = DB::table('tags_articles')->where('tags_id', $tag_id)->get();
             $articles_ids = $rst->pluck('article_id');
-            $articles = Articles::with('tags')->with('user')->whereIn('id', $articles_ids)->orderBy('created_at', 'desc')->paginate(5);
+            $articles = Articles::with('tags')->with('user')->whereIn('id', $articles_ids)->orderBy($orderby, 'desc')->paginate(5);
             $tags = Tags::withCount('article')->get();
 
             return response()->json([
