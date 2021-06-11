@@ -1,9 +1,6 @@
-<style>
-    
-</style>
 @extends('layouts.app')
 @section('content')
-<div id="login_form_wrapper">
+<div id="login_form_wrapper" style=" background-image: url('/images/1120.png');" >
    <form action="/check" class="login_form" method="post" style="width:80%;margin:0 auto">
         {{csrf_field()}}  
         <div class="form-group">
@@ -22,7 +19,7 @@
             </span>
           @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn   btn-secondary" >确定</button>
     </form>
 </div>
 @endsection

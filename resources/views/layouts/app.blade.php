@@ -94,7 +94,8 @@
 
         #login_form_wrapper {
             position: absolute;
-            width: 30%;
+            width: 80%;
+            max-width: 760px;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
@@ -189,6 +190,10 @@
 
             .article_right_section{
                 margin-bottom:30px;
+            }
+
+            #login_form_wrapper{
+                width:80%;
             }
 
             /*.article_left_section .btn{
