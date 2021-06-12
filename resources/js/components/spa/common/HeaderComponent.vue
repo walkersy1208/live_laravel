@@ -10,16 +10,15 @@
             :class="{ bg_gray: gray_color }"
         >
             <a class="navbar-brand" href="/spa/index">Website</a>
-            
-            <button
-                class="navbar-toggler d-lg-none"
-                type="button"
-                data-toggle="collapse"
-                data-target="#collapsibleNavId"
-                aria-controls="collapsibleNavId"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            ></button>
+            <button class="navbar-toggler d-lg-none" 
+                type="button" 
+                data-toggle="collapse" 
+                data-target="#collapsibleNavId" 
+                aria-controls="collapsibleNavId" 
+                aria-expanded="false" 
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li
@@ -61,7 +60,7 @@
                     <i class="el-icon-edit-outline" style="font-size:22px;"></i>
                 </div>
 
-                <div v-if="is_login && logout_url == undefined && username">
+                <div class="user_info_wrapper" v-if="is_login && logout_url == undefined && username">
                     <div class="dropdown">
                         <button style="background:#343a40;border:none;" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span style="font-size:20px;">
@@ -76,7 +75,7 @@
                     </div>
                 </div>
 
-                <div v-if="is_login && logout_url == undefined">
+                <div class="notifications_wrapper" v-if="is_login && logout_url == undefined">
                     <div class="dropdown">
                         <button
                             style="background:#ccc"

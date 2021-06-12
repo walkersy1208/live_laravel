@@ -196,6 +196,28 @@
                 width:80%;
             }
 
+            .add_article_icon{
+                display:inline-block;
+                position: relative;
+                top: 4px;
+            }
+
+            .user_info_wrapper{
+                display: inline-block;
+            }
+
+            .notifications_wrapper{
+                padding: 15px 0px;
+            }
+
+            .navbar-nav.mr-auto{
+                margin-bottom: 15px;
+            }
+
+            .ql-toolbar.ql-snow + .ql-container.ql-snow{
+                max-height:80%;
+            }
+
             /*.article_left_section .btn{
                 text-align: left !important;
             }*/
