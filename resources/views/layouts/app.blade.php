@@ -145,6 +145,17 @@
             margin-right:10px;
         }
 
+        .form_loading{
+            width: 50px;
+            height: 50px;
+            z-index: 999999;
+            font-size: 30px;
+            left: 50%;
+            top: 70%;
+            position: absolute;
+            transform: translate(-50%, -50%);
+        }
+
         @media(min-width:1024px) {
             .left_menu {
                 float: left;

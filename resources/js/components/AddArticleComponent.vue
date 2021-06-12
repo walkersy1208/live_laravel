@@ -9,6 +9,11 @@
                 </div>
             </button>
         </div>
+
+        <div class="row" v-if="showLoading">{{showLoading}}
+           <span class="form_loading"><i class="el-icon-loading"></i><span class="icon-name"></span></span>
+        </div>
+
         <div class="row">
             <message-component
                 v-if="success_response"
@@ -94,7 +99,7 @@
             </span>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="handleComfirm"
+                <el-button :disabled="disabledSubmitBtn" type="primary" @click="handleComfirm"
                     >确 定</el-button
                 >
             </span>
@@ -128,6 +133,9 @@ export default {
             upload_item_name:"",
             editor_content:"",
             tags:"",
+            showLoading:false,
+            isSubmit:true,
+            disabledSubmitBtn:false,
         };
     },
     methods: {
@@ -155,8 +163,12 @@ export default {
 
         async handleComfirm() {
             
-            if (this.fields) {
-
+            if (this.fields && this.isSubmit) {
+                
+                this.isSubmit = false;
+                this.disabledSubmitBtn = true;
+                this.showLoading = true;
+                
                 let submit_data = {};
                 for(let i in this.input_info){
                    submit_data[i] = this.input_info[i];
@@ -191,7 +203,7 @@ export default {
                 submit_data = form;
                 let _this = this;
                 let url = this.request_url;
-                //console.log(submit_data);
+                
                 
                 axios.post(url, submit_data,config).then(res => {
                     let { status, data } = res;
@@ -204,6 +216,11 @@ export default {
                         v.innerHTML = "";
                     });
 
+                   
+                    this.isSubmit = true;
+                    this.disabledSubmitBtn = false;
+                    this.showLoading = false;
+
                     if (data.code == "-1") {
                         let errors = data.errors;
                         for (let i in errors) {
@@ -212,6 +229,8 @@ export default {
                         }
                         
                     } else {
+
+                        //this.isSubmit = true;
                         this.$emit("update_record");
                         if(data.update_record){
                             let update_record = data.update_record;
@@ -225,18 +244,6 @@ export default {
                                     return item;
                                 });
                             }
-                            
-
-                            //let articles = this.$parent.$parent.articles;
-
-                            //console.log(update_record);
-                            // console.log(articles.map((item)=>{
-                            //     console.log(item.user.name);
-                            //     // if(item.id == update_record.id){
-                            //     //     item  = update_record;
-                            //     // }
-                            //     // return item;
-                            // }));
                         }
 
                         //success
