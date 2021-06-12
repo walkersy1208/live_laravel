@@ -99,8 +99,6 @@
         //"bInfo" : false,
     });
 
-    
-
     const tbody = document.querySelector(
         "tbody"
     );
