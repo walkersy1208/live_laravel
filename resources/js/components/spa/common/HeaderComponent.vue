@@ -21,7 +21,7 @@
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li
+                    <li style="display:none;"
                         class="nav-item active"
                         
                         v-if="!auth"
