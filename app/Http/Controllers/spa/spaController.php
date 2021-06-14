@@ -156,7 +156,19 @@ class spaController extends Controller
             $orderby = $condition == 'date' ? 'display_priority' : 'count_likes';
         }
 
-        $articles = Articles::with('user')->with('tags')->orderBy($orderby, 'desc')->paginate(5);
+        if (!empty($request->input('search'))) {
+            $search_value = $request->input('search');
+            $articles = Articles::with('user')->with('tags')
+            ->where('title', 'like', '%'.$search_value.'%')
+            ->orWhere('content', 'like', '%'.$search_value.'%')
+            ->orderBy($orderby, 'desc')->paginate(5);
+            if ($articles->isEmpty()) {
+                $articles = Articles::with('user')->with('tags')->orderBy($orderby, 'desc')->paginate(5);
+            }
+        } else {
+            $articles = Articles::with('user')->with('tags')->orderBy($orderby, 'desc')->paginate(5);
+        }
+
         $tags = Tags::withCount('article')->get();
         $create_date = $articles->toArray()['data'][0]['created_at'];
 
@@ -341,13 +353,16 @@ class spaController extends Controller
         if (!empty($tag_id)) {
             $condition = $request->input('sortBy');
             $orderby = 'display_priority';
+
             if (!empty($condition) && in_array($condition, ['date', 'hot'])) {
                 $orderby = $condition == 'date' ? 'display_priority' : 'count_likes';
             }
 
             $rst = DB::table('tags_articles')->where('tags_id', $tag_id)->get();
             $articles_ids = $rst->pluck('article_id');
+
             $articles = Articles::with('tags')->with('user')->whereIn('id', $articles_ids)->orderBy($orderby, 'desc')->paginate(5);
+
             $tags = Tags::withCount('article')->get();
 
             return response()->json([

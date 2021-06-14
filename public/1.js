@@ -271,6 +271,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -301,7 +303,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       time: '',
       showReadMore: true,
       open_up: false,
-      sortBy: "display_priority"
+      sortBy: "display_priority",
+      search_value: "",
+      clearInput: false
     };
   },
   // watch: {
@@ -314,14 +318,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   // },
   methods: {
     sort: function sort(condition) {
-      var url = "/spa/get_articles";
+      var url = "";
+
+      if (this.page_type == "tag") {
+        url = "/spa/tag_articles";
+      } else {
+        url = "/spa/get_articles";
+      }
+
       this.sort_article(url, condition);
     },
     sort_article: function sort_article(url, condition) {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var submit_data, config, res, status, data;
+        var submit_data, config, _this, res, status, data;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -330,11 +342,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 submit_data = {
                   "sortBy": condition
                 };
+
+                if (_this2.search_value != "") {
+                  submit_data.search = _this2.search_value;
+                }
+
+                if (_this2.tag_id != "") {
+                  submit_data.tag_id = _this2.tag_id;
+                }
+
                 config = {};
-                _context.next = 5;
+                _this = _this2;
+                _context.next = 8;
                 return axios.post(url, submit_data, config);
 
-              case 5:
+              case 8:
                 res = _context.sent;
                 status = res.status, data = res.data;
 
@@ -342,9 +364,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   _this2.articles = [];
 
                   _this2.setPageData(data);
+
+                  if (_this.auth) {
+                    _this2.$nextTick(function () {
+                      for (var i in _this.$refs.likeCom) {
+                        _this.$refs.likeCom[i].checkUserLike();
+                      }
+                    });
+                  }
                 }
 
-              case 8:
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -361,6 +391,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (e.target.parentNode.parentNode.parentNode.className.indexOf("content") != -1) {
         e.target.parentNode.parentNode.parentNode.className = "content init";
       }
+    },
+    handleSearch: function handleSearch(value) {
+      if (value != "") {
+        this.search_value = value;
+      } else {
+        this.search_value = "";
+      }
+
+      this.tag_default_choose = true;
+      this.curr_tag_index = "-1";
+      this.initData();
     },
     handle_update_record: function handle_update_record() {
       this.$router.go(0);
@@ -441,8 +482,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                   if (_this.auth) {
                     _this3.$nextTick(function () {
-                      for (var i in this.$refs.likeCom) {
-                        this.$refs.likeCom[i].checkUserLike();
+                      for (var i in _this.$refs.likeCom) {
+                        _this.$refs.likeCom[i].checkUserLike();
                       }
                     });
                   }
@@ -468,26 +509,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var submit_data, config, url, res, status, data;
+        var _this, submit_data, config, url, res, status, data;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                _this = _this4;
                 submit_data = {};
                 config = {};
                 url = '/spa/get_articles';
-                _context3.next = 5;
+
+                if (_this4.search_value != undefined) {
+                  submit_data.search = _this4.search_value;
+                }
+
+                _context3.next = 7;
                 return axios.post(url, submit_data, config);
 
-              case 5:
+              case 7:
                 res = _context3.sent;
                 status = res.status, data = res.data; //console.log(data);
 
                 if (status == "200") {
                   _this4.setPageData(data);
+
+                  if (_this.auth) {
+                    _this4.$nextTick(function () {
+                      for (var i in _this.$refs.likeCom) {
+                        _this.$refs.likeCom[i].checkUserLike();
+                      }
+                    });
+                  }
                 }
 
-              case 8:
+              case 10:
               case "end":
                 return _context3.stop();
             }
@@ -499,15 +555,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var submit_data, config, url, res, status, data;
+        var submit_data, url, config, res, status, data;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
+                _this5.clearInput = false;
                 _this5.tag_active = true;
                 submit_data = {
                   "sortBy": _this5.sortBy
                 };
+                url = "/spa/get_articles";
 
                 if (tag_id) {
                   submit_data.tag_id = tag_id;
@@ -515,6 +573,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   _this5.page_type = "tag";
                   _this5.tag_default_choose = false;
                   _this5.curr_tag_index = index;
+                  url = '/spa/tag_articles';
                 } else {
                   _this5.page_type = "";
                   _this5.tag_default_choose = true;
@@ -522,11 +581,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }
 
                 config = {};
-                url = '/spa/tag_articles';
-                _context4.next = 7;
+                _context4.next = 8;
                 return axios.post(url, submit_data, config);
 
-              case 7:
+              case 8:
                 res = _context4.sent;
                 status = res.status, data = res.data;
 
@@ -541,9 +599,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                       }
                     });
                   }
+
+                  _this5.clearInput = true;
                 }
 
-              case 10:
+              case 11:
               case "end":
                 return _context4.stop();
             }
@@ -659,8 +719,8 @@ var render = function() {
           { staticClass: "row" },
           [
             _c("sortbtn-component", {
-              attrs: { spa_page: true },
-              on: { sort_article: _vm.sort }
+              attrs: { spa_page: true, clearInput: _vm.clearInput },
+              on: { sort_article: _vm.sort, search: _vm.handleSearch }
             })
           ],
           1

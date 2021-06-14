@@ -13,6 +13,8 @@
             <sortbtn-component
                 :spa_page="true"
                 @sort_article="sort"
+                @search="handleSearch"
+                :clearInput="clearInput"
             >
             </sortbtn-component>
         </div>
@@ -278,6 +280,8 @@
             showReadMore:true,
             open_up:false,
             sortBy:"display_priority",
+            search_value:"",
+            clearInput:false,
         };
     },
 
@@ -293,22 +297,44 @@
    
     methods:{
         sort(condition){
-            let url = "/spa/get_articles";
+            
+            let url = "";
+            if(this.page_type == "tag"){
+               url = "/spa/tag_articles";
+            }else{ 
+               url = "/spa/get_articles";
+            }
             this.sort_article(url,condition);
         },
 
         async sort_article(url,condition){
-            this.sortBy = condition;
+            this.sortBy = condition; 
             let submit_data = {
                 "sortBy": condition,
             }
-            let config = {};
+            if(this.search_value!=""){
+                submit_data.search =this.search_value;
+            } 
+           
+
+            if(this.tag_id!=""){
+                submit_data.tag_id = this.tag_id;
+            }
             
+            let config = {};
+            let _this = this;
             let res = await axios.post(url, submit_data,config);
             let {status,data} = res;
             if(status == "200" && data.code!="-1"){
                 this.articles = [];
                 this.setPageData(data);
+                if(_this.auth){ 
+                    this.$nextTick(function () {
+                        for(let i in _this.$refs.likeCom){
+                            _this.$refs.likeCom[i].checkUserLike();
+                        }
+                    })
+                }
             }
         },
 
@@ -322,6 +348,18 @@
             if(e.target.parentNode.parentNode.parentNode.className.indexOf("content")!=-1){
                 e.target.parentNode.parentNode.parentNode.className="content init";
             }
+        },
+
+        handleSearch(value){
+            if(value!=""){ 
+                this.search_value = value;
+            }else{
+                this.search_value = "";
+            }
+
+            this.tag_default_choose = true;
+            this.curr_tag_index = "-1";
+            this.initData();
         },
 
         handle_update_record(){
@@ -397,8 +435,8 @@
                 this.setPageData(data);
                     if(_this.auth){ 
                         this.$nextTick(function () {
-                            for(let i in this.$refs.likeCom){
-                                this.$refs.likeCom[i].checkUserLike();
+                            for(let i in _this.$refs.likeCom){
+                                _this.$refs.likeCom[i].checkUserLike();
                             }
                         })
                     }
@@ -414,43 +452,55 @@
             })
         },
 
-        async initData(){
+        async initData(){ 
+            let _this = this;
             let submit_data = {};
             let config = {};
             let url = '/spa/get_articles';
+            if(this.search_value!=undefined){
+                submit_data.search = this.search_value;
+            }
             let res = await axios.post(url, submit_data,config);
             let {status,data} = res;
             //console.log(data);
             if(status == "200"){
                 this.setPageData(data);
+                if(_this.auth){ 
+                    this.$nextTick(function () {
+                        for(let i in _this.$refs.likeCom){
+                            _this.$refs.likeCom[i].checkUserLike();
+                        }
+                    })
+                }
             }
         },
 
         
         async handleTag(tag_id,index){
-                
+                this.clearInput = false;
                 this.tag_active = true;
                 let submit_data = {
                     "sortBy":this.sortBy,
                 };
 
+                let url  = "/spa/get_articles";
                 if(tag_id){
-
                     submit_data.tag_id = tag_id;
                     this.tag_id = tag_id;
                     this.page_type = "tag";
                     this.tag_default_choose = false;
                     this.curr_tag_index = index;
+                    url = '/spa/tag_articles';
 
                 }else{
-
+                    
                     this.page_type = "";
                     this.tag_default_choose = true;
                     this.curr_tag_index = "-1";
                 }
                 
                 let config = {};
-                let url = '/spa/tag_articles';
+                
                 let res = await axios.post(url, submit_data,config);
                 let {status,data} = res;
                 if(status == "200"){ 
@@ -463,9 +513,10 @@
                             }
                         })
                     }
+                   
+                    this.clearInput = true;
                 }
             }
-       
     },
     
     created(){
