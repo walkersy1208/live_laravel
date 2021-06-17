@@ -280,7 +280,6 @@ export default {
         },
 
         async logout() {
-
             if(localStorage.getItem('passport_token')){
                 localStorage.removeItem('passport_token');
                 let url = "/spa/logout";

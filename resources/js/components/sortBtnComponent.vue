@@ -16,6 +16,8 @@
         margin-right:8px;
     }
 
+   
+
     .search_input{
         position: relative;
         left: 10px;

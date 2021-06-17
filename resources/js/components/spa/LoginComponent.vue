@@ -115,9 +115,15 @@ export default {
                                 window.axios.defaults.headers.common[
                                     "Authorization"
                                 ] = "Bearer " + data.data.access_token;
+
                                 localStorage.setItem(
                                     "passport_token",
                                     data.data.access_token
+                                );
+                                
+                                localStorage.setItem(
+                                    "token_expire_date",
+                                    new Date().getTime() + 60*60*24,
                                 );
                             }
                         }

@@ -273,6 +273,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -326,6 +327,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         url = "/spa/get_articles";
       }
 
+      this.sortBy = condition;
       this.sort_article(url, condition);
     },
     sort_article: function sort_article(url, condition) {
@@ -410,7 +412,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.time = new Date().getTime();
     },
     handleLikeLogin: function handleLikeLogin() {
-      //this.$parent.$refs.headerCom.openLoginForm();
       this.$parent.$refs.headerCom.openLoginForm();
     },
     setPageData: function setPageData(data) {
@@ -521,6 +522,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 url = '/spa/get_articles';
 
                 if (_this4.search_value != undefined) {
+                  submit_data.sortBy = _this4.sortBy;
                   submit_data.search = _this4.search_value;
                 }
 
@@ -613,7 +615,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   created: function created() {
-    if (localStorage.getItem('passport_token')) {
+    if (localStorage.getItem('passport_token') && localStorage.getItem('token_expire_date') < new Date().getTime()) {
+      //if(localStorage.getItem('passport_token')){
       this.$store.dispatch("getUserInfo");
     }
   },
@@ -726,123 +729,94 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c("div", { key: _vm.time, staticClass: "row xs-flex-reverse" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "article_left_section col-md-8 btn-primarycol-sm-6 col-xs-12"
-            },
-            [
-              _c(
-                "div",
-                { attrs: { id: "accordion" } },
-                [
-                  _vm.articles
-                    ? _c(
-                        "transition-group",
-                        { attrs: { name: "fade" } },
-                        _vm._l(_vm.articles, function(item, index) {
-                          return _c(
-                            "div",
-                            {
-                              key: index + 1,
-                              staticClass: "card",
-                              staticStyle: { "margin-bottom": "30px" }
-                            },
-                            [
-                              _c("div", { staticClass: "card-header" }, [
-                                _c("h5", { staticClass: "mb-0" }, [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-link",
-                                      attrs: {
-                                        "data-toggle": "collapse",
-                                        "aria-expanded": "true"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.article_detail(item.id)
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                    " +
-                                          _vm._s(item.title) +
-                                          "\n                                    "
-                                      )
-                                    ]
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "collapse show",
-                                  attrs: {
-                                    id: "collapseOne",
-                                    "aria-labelledby": "headingOne",
-                                    "data-parent": "#accordion"
-                                  }
-                                },
-                                [
-                                  _c("div", { staticClass: "card-body" }, [
+        _c(
+          "div",
+          {
+            key: _vm.time,
+            staticClass: "row xs-flex-reverse",
+            staticStyle: { position: "relative" }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "article_left_section col-md-8 btn-primarycol-sm-6 col-xs-12"
+              },
+              [
+                _c(
+                  "div",
+                  { attrs: { id: "accordion" } },
+                  [
+                    _vm.articles
+                      ? _c(
+                          "transition-group",
+                          { attrs: { name: "fade" } },
+                          _vm._l(_vm.articles, function(item, index) {
+                            return _c(
+                              "div",
+                              {
+                                key: index + 1,
+                                staticClass: "card",
+                                staticStyle: { "margin-bottom": "30px" }
+                              },
+                              [
+                                _c("div", { staticClass: "card-header" }, [
+                                  _c("h5", { staticClass: "mb-0" }, [
                                     _c(
-                                      "div",
+                                      "button",
                                       {
-                                        staticClass: "content",
-                                        class: { init: _vm.showReadMore }
+                                        staticClass: "btn btn-link",
+                                        attrs: {
+                                          "data-toggle": "collapse",
+                                          "aria-expanded": "true"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.article_detail(item.id)
+                                          }
+                                        }
                                       },
                                       [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass: "read_more",
-                                            staticStyle: { cursor: "pointer" },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.readMore(
-                                                  $event,
-                                                  index
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                            阅读更多"
-                                            ),
-                                            _c("i", {
-                                              staticClass: "el-icon-arrow-down"
-                                            })
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("div", {
-                                          staticStyle: { clear: "both" }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("div", {
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(item.title) +
+                                            "\n                                    "
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "collapse show",
+                                    attrs: {
+                                      id: "collapseOne",
+                                      "aria-labelledby": "headingOne",
+                                      "data-parent": "#accordion"
+                                    }
+                                  },
+                                  [
+                                    _c("div", { staticClass: "card-body" }, [
+                                      _c(
+                                        "div",
+                                        {
                                           staticClass: "content",
-                                          domProps: {
-                                            innerHTML: _vm._s(item.content)
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("div", [
+                                          class: { init: _vm.showReadMore }
+                                        },
+                                        [
                                           _c(
                                             "div",
                                             {
-                                              staticClass: "open_up",
+                                              staticClass: "read_more",
                                               staticStyle: {
                                                 cursor: "pointer"
                                               },
                                               on: {
                                                 click: function($event) {
-                                                  return _vm.openUp(
+                                                  return _vm.readMore(
                                                     $event,
                                                     index
                                                   )
@@ -851,239 +825,287 @@ var render = function() {
                                             },
                                             [
                                               _vm._v(
-                                                "\n                                                收起 "
+                                                "\n                                            阅读更多"
                                               ),
                                               _c("i", {
-                                                staticClass: "el-icon-arrow-up"
+                                                staticClass:
+                                                  "el-icon-arrow-down"
                                               })
                                             ]
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          { staticClass: "list_bottom" },
-                                          [
+                                          ),
+                                          _vm._v(" "),
+                                          _c("div", {
+                                            staticStyle: { clear: "both" }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("div", {
+                                            staticClass: "content",
+                                            domProps: {
+                                              innerHTML: _vm._s(item.content)
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("div", [
                                             _c(
                                               "div",
-                                              [
-                                                _c("spalike-component", {
-                                                  ref: "likeCom",
-                                                  refInFor: true,
-                                                  attrs: {
-                                                    article_id: item.id,
-                                                    is_login: _vm.auth,
-                                                    likes_num: item.count_likes,
-                                                    showLikeCom: _vm.showHidden
-                                                  },
-                                                  on: {
-                                                    "update:likes_num": function(
-                                                      $event
-                                                    ) {
-                                                      return _vm.$set(
-                                                        item,
-                                                        "count_likes",
-                                                        $event
-                                                      )
-                                                    },
-                                                    login: _vm.handleLikeLogin
+                                              {
+                                                staticClass: "open_up",
+                                                staticStyle: {
+                                                  cursor: "pointer"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.openUp(
+                                                      $event,
+                                                      index
+                                                    )
                                                   }
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                收起 "
+                                                ),
+                                                _c("i", {
+                                                  staticClass:
+                                                    "el-icon-arrow-up"
                                                 })
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _vm.auth &&
-                                            item.user_id == _vm.auth_id
-                                              ? _c(
-                                                  "div",
-                                                  [
-                                                    _c("article-component", {
-                                                      attrs: {
-                                                        type: "edit",
-                                                        title: "提示信息",
-                                                        fields: [
-                                                          {
-                                                            name: "title",
-                                                            type: "text",
-                                                            ph:
-                                                              "请输入文章标题",
-                                                            val: "" + item.title
-                                                          },
-                                                          {
-                                                            name: "tags",
-                                                            type: "search",
-                                                            ph: "",
-                                                            request_url: "/",
-                                                            val:
-                                                              "" +
-                                                              JSON.stringify(
-                                                                item.tags
-                                                              )
-                                                          },
-                                                          {
-                                                            name: "content",
-                                                            type: "editor",
-                                                            ph: "",
-                                                            val:
-                                                              "" + item.content
-                                                          }
-                                                        ],
-                                                        msg: "更新成功",
-                                                        status: "success",
-                                                        request_url:
-                                                          "/spa/articles_update/" +
-                                                          item.id,
-                                                        redirect_url:
-                                                          "/spa/index"
-                                                      },
-                                                      on: {
-                                                        update_record:
-                                                          _vm.handle_update_record
-                                                      }
-                                                    })
-                                                  ],
-                                                  1
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            _vm.auth &&
-                                            item.user_id == _vm.auth_id
-                                              ? _c(
-                                                  "div",
-                                                  [
-                                                    _c("comfirm-component", {
-                                                      attrs: {
-                                                        request_url:
-                                                          "articles_del/" +
-                                                          item.id,
-                                                        small_size: true,
-                                                        del_id: item.id
-                                                      }
-                                                    })
-                                                  ],
-                                                  1
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass: "article_user_name"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                                    " +
-                                                    _vm._s(item.user.name) +
-                                                    "\n                                                "
-                                                )
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "article_created_date"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                                    " +
-                                                    _vm._s(item.created_at) +
-                                                    "\n                                                "
-                                                )
                                               ]
                                             )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ]
-                              )
-                            ]
-                          )
-                        }),
-                        0
-                      )
-                    : _vm._e()
-                ],
-                1
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "article_right_section col-md-4 btn-primarycol-sm-6 col-xs-12 "
-            },
-            [
-              _c("div", { staticClass: "card" }, [
-                _c("div", { staticClass: "card-header" }, [_vm._v("相关标签")]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "card-body" },
-                  [
-                    _vm._l(_vm.related_tags, function(tag, index2) {
-                      return tag.article_count > 0
-                        ? _c(
-                            "a",
-                            {
-                              key: index2,
-                              staticClass: "badge m-badge ",
-                              class: [
-                                _vm.curr_tag_index == index2
-                                  ? "badge-active"
-                                  : "badge-primary"
-                              ],
-                              staticStyle: { cursor: "pointer" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.handleTag(tag.id, index2)
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                           \n                            " +
-                                  _vm._s(tag.name) +
-                                  "(" +
-                                  _vm._s(tag.article_count) +
-                                  ")\n                        "
-                              )
-                            ]
-                          )
-                        : _vm._e()
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "badge m-badge ",
-                        class: [
-                          _vm.tag_default_choose
-                            ? "badge-active"
-                            : "badge-primary"
-                        ],
-                        staticStyle: { cursor: "pointer" },
-                        on: {
-                          click: function($event) {
-                            return _vm.handleTag()
-                          }
-                        }
-                      },
-                      [_vm._v("所有")]
-                    )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            { staticClass: "list_bottom" },
+                                            [
+                                              _c(
+                                                "div",
+                                                [
+                                                  _c("spalike-component", {
+                                                    ref: "likeCom",
+                                                    refInFor: true,
+                                                    attrs: {
+                                                      article_id: item.id,
+                                                      is_login: _vm.auth,
+                                                      likes_num:
+                                                        item.count_likes,
+                                                      showLikeCom:
+                                                        _vm.showHidden
+                                                    },
+                                                    on: {
+                                                      "update:likes_num": function(
+                                                        $event
+                                                      ) {
+                                                        return _vm.$set(
+                                                          item,
+                                                          "count_likes",
+                                                          $event
+                                                        )
+                                                      },
+                                                      login: _vm.handleLikeLogin
+                                                    }
+                                                  })
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _vm.auth &&
+                                              item.user_id == _vm.auth_id
+                                                ? _c(
+                                                    "div",
+                                                    [
+                                                      _c("article-component", {
+                                                        attrs: {
+                                                          type: "edit",
+                                                          title: "提示信息",
+                                                          fields: [
+                                                            {
+                                                              name: "title",
+                                                              type: "text",
+                                                              ph:
+                                                                "请输入文章标题",
+                                                              val:
+                                                                "" + item.title
+                                                            },
+                                                            {
+                                                              name: "tags",
+                                                              type: "search",
+                                                              ph: "",
+                                                              request_url: "/",
+                                                              val:
+                                                                "" +
+                                                                JSON.stringify(
+                                                                  item.tags
+                                                                )
+                                                            },
+                                                            {
+                                                              name: "content",
+                                                              type: "editor",
+                                                              ph: "",
+                                                              val:
+                                                                "" +
+                                                                item.content
+                                                            }
+                                                          ],
+                                                          msg: "更新成功",
+                                                          status: "success",
+                                                          request_url:
+                                                            "/spa/articles_update/" +
+                                                            item.id,
+                                                          redirect_url:
+                                                            "/spa/index"
+                                                        },
+                                                        on: {
+                                                          update_record:
+                                                            _vm.handle_update_record
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                                : _vm._e(),
+                                              _vm._v(" "),
+                                              _vm.auth &&
+                                              item.user_id == _vm.auth_id
+                                                ? _c(
+                                                    "div",
+                                                    [
+                                                      _c("comfirm-component", {
+                                                        attrs: {
+                                                          request_url:
+                                                            "articles_del/" +
+                                                            item.id,
+                                                          small_size: true,
+                                                          del_id: item.id
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                                : _vm._e(),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "article_user_name"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                    " +
+                                                      _vm._s(item.user.name) +
+                                                      "\n                                                "
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "article_created_date"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                    " +
+                                                      _vm._s(item.created_at) +
+                                                      "\n                                                "
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ]
+                                )
+                              ]
+                            )
+                          }),
+                          0
+                        )
+                      : _vm._e()
                   ],
-                  2
+                  1
                 )
-              ])
-            ]
-          )
-        ]),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "article_right_section col-md-4 btn-primarycol-sm-6 col-xs-12 "
+              },
+              [
+                _c("div", { staticClass: "card" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _vm._v("相关标签")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "card-body" },
+                    [
+                      _vm._l(_vm.related_tags, function(tag, index2) {
+                        return tag.article_count > 0
+                          ? _c(
+                              "a",
+                              {
+                                key: index2,
+                                staticClass: "badge m-badge ",
+                                class: [
+                                  _vm.curr_tag_index == index2
+                                    ? "badge-active"
+                                    : "badge-primary"
+                                ],
+                                staticStyle: { cursor: "pointer" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.handleTag(tag.id, index2)
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                           \n                            " +
+                                    _vm._s(tag.name) +
+                                    "(" +
+                                    _vm._s(tag.article_count) +
+                                    ")\n                        "
+                                )
+                              ]
+                            )
+                          : _vm._e()
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "badge m-badge ",
+                          class: [
+                            _vm.tag_default_choose
+                              ? "badge-active"
+                              : "badge-primary"
+                          ],
+                          staticStyle: { cursor: "pointer" },
+                          on: {
+                            click: function($event) {
+                              return _vm.handleTag()
+                            }
+                          }
+                        },
+                        [_vm._v("所有")]
+                      )
+                    ],
+                    2
+                  )
+                ])
+              ]
+            )
+          ]
+        ),
         _vm._v(" "),
         _c(
           "div",

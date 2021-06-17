@@ -20,8 +20,6 @@ export default {
             state.name  =  "";
             state.email =  "";
             state.id    =  "";
-
-           
         }
     },
 

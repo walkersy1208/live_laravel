@@ -5,10 +5,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 //dingo api test
-$api = app('Dingo\Api\Routing\Router');
-$api->version('v1', function ($api) {
-    $api->get('test', '\App\Http\Controllers\Admin\apiController@login');
-});
+// $api = app('Dingo\Api\Routing\Router');
+// $api->version('v1', function ($api) {
+//     $api->get('test', '\App\Http\Controllers\Admin\apiController@login');
+// });
 
 /*
 |--------------------------------------------------------------------------

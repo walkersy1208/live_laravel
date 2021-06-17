@@ -32,7 +32,7 @@
                     this.content_default_value = this.default_value;
                 
                 }
-               e.container.querySelector('.ql-blank').innerHTML = this.content_default_value;
+                e.container.querySelector('.ql-blank').innerHTML = this.content_default_value;
             },
 
             onEditorChange($event){ 
@@ -40,12 +40,7 @@
                 //console.log(this.content);
             },
 
-            /*imgHandler(state) {
-                if (state) {
-                   //alert(state);
-                   this.$refs.fileBtn.click()
-                }
-            },*/
+          
 
             /*handleChange(e) {
                 const files = Array.prototype.slice.call(e.target.files);

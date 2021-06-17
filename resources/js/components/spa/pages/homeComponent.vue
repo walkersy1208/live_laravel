@@ -18,7 +18,8 @@
             >
             </sortbtn-component>
         </div>
-        <div class="row xs-flex-reverse" :key="time">
+        <div class="row xs-flex-reverse" :key="time" style="position:relative;">
+                
                 <div  class="article_left_section col-md-8 btn-primarycol-sm-6 col-xs-12"
                 >
                     <div id="accordion">
@@ -297,13 +298,13 @@
    
     methods:{
         sort(condition){
-            
             let url = "";
             if(this.page_type == "tag"){
                url = "/spa/tag_articles";
             }else{ 
                url = "/spa/get_articles";
             }
+            this.sortBy = condition;
             this.sort_article(url,condition);
         },
 
@@ -371,7 +372,6 @@
         },
 
         handleLikeLogin(){
-            //this.$parent.$refs.headerCom.openLoginForm();
             this.$parent.$refs.headerCom.openLoginForm();
         },
 
@@ -457,7 +457,9 @@
             let submit_data = {};
             let config = {};
             let url = '/spa/get_articles';
+            
             if(this.search_value!=undefined){
+                submit_data.sortBy = this.sortBy;
                 submit_data.search = this.search_value;
             }
             let res = await axios.post(url, submit_data,config);
@@ -520,7 +522,8 @@
     },
     
     created(){
-        if(localStorage.getItem('passport_token')){
+        if(localStorage.getItem('passport_token') && localStorage.getItem('token_expire_date')< (new Date().getTime())){
+        //if(localStorage.getItem('passport_token')){
             this.$store.dispatch("getUserInfo");
         }
     },

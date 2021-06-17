@@ -162,6 +162,7 @@ class spaController extends Controller
             ->where('title', 'like', '%'.$search_value.'%')
             ->orWhere('content', 'like', '%'.$search_value.'%')
             ->orderBy($orderby, 'desc')->paginate(5);
+
             if ($articles->isEmpty()) {
                 $articles = Articles::with('user')->with('tags')->orderBy($orderby, 'desc')->paginate(5);
             }
@@ -170,7 +171,7 @@ class spaController extends Controller
         }
 
         $tags = Tags::withCount('article')->get();
-        $create_date = $articles->toArray()['data'][0]['created_at'];
+        //$create_date = $articles->toArray()['data'][0]['created_at'];
 
         //$dt = \Carbon\Carbon::parse($create_date)->diffForHumans();
         //dd($dt);
@@ -369,9 +370,9 @@ class spaController extends Controller
                 'articles' => $articles,
                 'tags' => $tags,
             ]);
-        } else {
-            return $this->get_articles();
-        }
+        } //else {
+           // return $this->get_articles();
+        //}
     }
 
     public function user(Request $request)
@@ -501,12 +502,9 @@ class spaController extends Controller
                 $user_is_liked = true;
             }
 
-            //$article_info = Articles::find($article_id);
-
             return response()->json([
                 'code' => '0',
                 'user_is_liked' => $user_is_liked,
-                //'likes_num' => $article_info->count_likes,
             ]);
         } else {
             return response()->json([
