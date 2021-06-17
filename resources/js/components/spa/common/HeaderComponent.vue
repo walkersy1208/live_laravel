@@ -233,7 +233,7 @@ export default {
         async checkUserNotifications(){
             let config = {};
             let submit_data = {};
-            let url = '/spa/read_all_notifications/';
+            let url = '/spa/read_all_notifications';
             let res = await axios.post(url, submit_data,config);
             let {status,data} = res;
             if(status == "200"){
