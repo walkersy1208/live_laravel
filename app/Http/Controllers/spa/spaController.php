@@ -20,7 +20,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class spaController extends Controller
 {
@@ -171,18 +170,6 @@ class spaController extends Controller
         }
 
         $tags = Tags::withCount('article')->get();
-        //$create_date = $articles->toArray()['data'][0]['created_at'];
-
-        //$dt = \Carbon\Carbon::parse($create_date)->diffForHumans();
-        //dd($dt);
-        // dd(Auth::user());
-        // if (Auth::user()) {
-        //     $article_tmp = [];
-        //     $subset = $articles->map(function ($article) {
-        //         var_dump($article);
-        //     });
-        // }
-        //dd($articles->toArray());
 
         return response()->json([
             'articles' => $articles,
@@ -192,20 +179,6 @@ class spaController extends Controller
 
     public function update(Request $request, $article_id)
     {
-        //使用了继承formRequst的articleRequest类，
-        //在articleRequest类中已经使用了表单验证，并返回消息
-
-        /*try {
-            $this->validate($request, [
-                'article_id' => 'required',
-                'title' => 'required|max:100',
-                'content' => 'required|max:255',
-            ]);
-        } catch (ValidationException  $e) {
-            return redirect()->back()->withErrors($e->errors());
-        }*/
-
-        //$article_id = $request->input('article_id');
         $title = $request->input('title');
         $content = $request->input('content');
 
@@ -367,12 +340,17 @@ class spaController extends Controller
             $tags = Tags::withCount('article')->get();
 
             return response()->json([
+                'code' => 0,
                 'articles' => $articles,
                 'tags' => $tags,
             ]);
-        } //else {
-           // return $this->get_articles();
-        //}
+        } else {
+            return response()->json([
+                'code' => -1,
+                'articles' => [],
+                'tags' => [],
+            ]);
+        }
     }
 
     public function user(Request $request)
@@ -406,11 +384,6 @@ class spaController extends Controller
             'code' => $code,
             'data' => $result,
         ]);
-    }
-
-    public function me()
-    {
-        dd(auth('api'));
     }
 
     public function changeSwitchStatus(Request $request)
@@ -924,12 +897,5 @@ class spaController extends Controller
             echo json_encode(['code' => -1, 'msg' => 'RESET_PASSWORD_FAIL']);
             exit;
         }
-
-        //$hash1 = bcrypt('333333');
-        //$hash2 = bcrypt('test');
-        //$is_true = Hash::check('333333', $admin_info['password']);
-        //$2y$10$5WSfuWLXa5XMuKrUFuyh.e4cCxESO0qBAX4XUDo5q2jF237r61IK6
-        //$is_true = == $admin_info['password'];
-        //echo json_encode(['code' => 0, 'msg' => $is_true]);
     }
 }

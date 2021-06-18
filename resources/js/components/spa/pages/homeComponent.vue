@@ -329,13 +329,13 @@
             if(status == "200" && data.code!="-1"){
                 this.articles = [];
                 this.setPageData(data);
-                if(_this.auth){ 
-                    this.$nextTick(function () {
-                        for(let i in _this.$refs.likeCom){
-                            _this.$refs.likeCom[i].checkUserLike();
-                        }
-                    })
-                }
+                // if(_this.auth){ 
+                //     this.$nextTick(function () {
+                //         for(let i in _this.$refs.likeCom){
+                //             _this.$refs.likeCom[i].checkUserLike();
+                //         }
+                //     })
+                // }
             }
         },
 
@@ -507,14 +507,14 @@
                 let {status,data} = res;
                 if(status == "200"){ 
                     this.setPageData(data);
-                    if(this.auth){ 
-                        this.$nextTick(function () {
-                            for(let i in this.$refs.likeCom){
-                                this.$refs.likeCom[i].checkUserLike();
-                                this.showHidden = true;
-                            }
-                        })
-                    }
+                    // if(this.auth){ 
+                    //     this.$nextTick(function () {
+                    //         for(let i in this.$refs.likeCom){
+                    //             this.$refs.likeCom[i].checkUserLike();
+                    //             this.showHidden = true;
+                    //         }
+                    //     })
+                    // }
                    
                     this.clearInput = true;
                 }
@@ -522,7 +522,9 @@
     },
     
     created(){
-        if(localStorage.getItem('passport_token') && localStorage.getItem('token_expire_date')< (new Date().getTime())){
+        console.log(localStorage.getItem('token_expire_date'));
+        console.log(new Date().getTime());
+        if(localStorage.getItem('passport_token') && localStorage.getItem('token_expire_date')> (new Date().getTime())){
         //if(localStorage.getItem('passport_token')){
             this.$store.dispatch("getUserInfo");
         }

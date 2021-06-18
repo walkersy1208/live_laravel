@@ -365,15 +365,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 if (status == "200" && data.code != "-1") {
                   _this2.articles = [];
 
-                  _this2.setPageData(data);
+                  _this2.setPageData(data); // if(_this.auth){ 
+                  //     this.$nextTick(function () {
+                  //         for(let i in _this.$refs.likeCom){
+                  //             _this.$refs.likeCom[i].checkUserLike();
+                  //         }
+                  //     })
+                  // }
 
-                  if (_this.auth) {
-                    _this2.$nextTick(function () {
-                      for (var i in _this.$refs.likeCom) {
-                        _this.$refs.likeCom[i].checkUserLike();
-                      }
-                    });
-                  }
                 }
 
               case 11:
@@ -591,16 +590,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 status = res.status, data = res.data;
 
                 if (status == "200") {
-                  _this5.setPageData(data);
+                  _this5.setPageData(data); // if(this.auth){ 
+                  //     this.$nextTick(function () {
+                  //         for(let i in this.$refs.likeCom){
+                  //             this.$refs.likeCom[i].checkUserLike();
+                  //             this.showHidden = true;
+                  //         }
+                  //     })
+                  // }
 
-                  if (_this5.auth) {
-                    _this5.$nextTick(function () {
-                      for (var i in this.$refs.likeCom) {
-                        this.$refs.likeCom[i].checkUserLike();
-                        this.showHidden = true;
-                      }
-                    });
-                  }
 
                   _this5.clearInput = true;
                 }
@@ -615,7 +613,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   created: function created() {
-    if (localStorage.getItem('passport_token') && localStorage.getItem('token_expire_date') < new Date().getTime()) {
+    console.log(localStorage.getItem('token_expire_date'));
+    console.log(new Date().getTime());
+
+    if (localStorage.getItem('passport_token') && localStorage.getItem('token_expire_date') > new Date().getTime()) {
       //if(localStorage.getItem('passport_token')){
       this.$store.dispatch("getUserInfo");
     }
